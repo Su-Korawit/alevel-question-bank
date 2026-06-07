@@ -1,128 +1,107 @@
-# คลังข้อสอบ A-Level TCAS 2568
+# คลังข้อสอบ A-Level 🌾
 
-ระบบดึงและแสดงข้อสอบ A-Level จากไฟล์ PDF อย่างเป็นทางการของ TCAS 2568 โดยใช้ Gemini Vision API และ React frontend
-
-ข้อมูลข้อสอบมาจาก [mytcas.com/answers](https://www.mytcas.com/answers/)
-
----
-
-## วิชาที่รองรับ
-
-| วิชา | จำนวนข้อ |
-|------|---------|
-| ชีววิทยา (bio) | 32 |
-| เคมี (chem) | 28 |
-| ภาษาอังกฤษ (eng) | 80 |
-| คณิตศาสตร์ 1 (math1) | 25 |
-| คณิตศาสตร์ 2 (math2) | 25 |
-| ฟิสิกส์ (phy) | 24 |
-| วิทยาศาสตร์ประยุกต์ (sci) | 26 |
-| **รวม** | **240** |
+A Thai-language **A-Level / TCAS 2568 question bank** with a sunny pixel-farm RPG theme.
+Built with React 19, Vite, and TypeScript. Questions are extracted from official PDF answer
+sheets via a Google Gemini AI pipeline and served as static JSON.
 
 ---
 
-## Tech Stack
+## Features
 
-- **Pipeline**: Node.js + TypeScript (`tsx`)
-- **AI Extraction**: Google Gemini 2.5 Flash (Files API + Vision)
-- **Storage**: SQLite (`better-sqlite3`) + JSON exports
-- **Frontend**: React 19 + Vite
-- **Math Rendering**: KaTeX
-- **PDF Image Extraction**: pdfjs-dist + node-canvas
+- 7 subjects — ชีววิทยา, เคมี, ฟิสิกส์, คณิตศาสตร์ 1 & 2, ภาษาอังกฤษ, วิทยาศาสตร์ประยุกต์
+- Multiple-choice answers with instant correct / wrong feedback
+- Reveal-answer mode (ดูเฉลย) and AI-generated explanations
+- Progress tracking (seen / correct) persisted in `localStorage`, per subject & year
+- KaTeX rendering for math equations
+- Pixel-farm RPG UI — sunny sky, parchment quest board, wooden buttons (CSS-only, no extra deps)
+- `prefers-reduced-motion` safe
 
 ---
 
-## Getting Started
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React 19, TypeScript, Vite, CSS Modules |
+| Math rendering | KaTeX |
+| Data pipeline | Node.js + `pdfjs-dist` + Google Gemini AI (`@google/generative-ai`) |
+| Storage | `better-sqlite3` (pipeline) → static JSON (frontend) |
+| Fonts | Press Start 2P (pixel labels) + IBM Plex Sans Thai (Thai body) |
+
+---
+
+## Getting started
 
 ### Prerequisites
 
-- Node.js 20+
-- Google Gemini API key
+- Node.js 18+
+- A Google Gemini API key (pipeline only)
 
-### Installation
+### 1 — Install dependencies
 
 ```bash
 npm install
 ```
 
-Create a `.env` file:
+### 2 — Run the question extraction pipeline (optional)
 
-```
-VITE_GEMINI_API_KEY=your_api_key_here
-```
+> Skip this if `public/data/` already contains JSON files.
 
-### Run the extraction pipeline
-
-Place PDF files in `pdf/` following the naming convention:
-```
-tcas68-{subject}-a-level.pdf
-```
-e.g. `tcas68-math1-a-level.pdf`, `tcas68-eng-a-level.pdf`
-
-Then run:
+Place raw PDF files in `pdf/` then:
 
 ```bash
+# Set your Gemini API key
+echo "GEMINI_API_KEY=your_key_here" > .env
+
+# Run the pipeline
 npm run pipeline:tsx
 ```
 
-The pipeline is resumable — it skips already-processed PDFs and reuses cached Gemini file URIs (valid 48h).
+This writes extracted questions to `data/question-bank.sqlite` and exports them to
+`public/data/` as JSON files consumed by the frontend.
 
-### Run the frontend
+### 3 — Start the dev server
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173)
+Open [http://localhost:5173](http://localhost:5173).
+
+### 4 — Build for production
+
+```bash
+npm run build
+```
+
+Output goes to `dist/`. The app is a fully static SPA — deploy to any static host
+(Vercel, Netlify, GitHub Pages).
 
 ---
 
-## Project Structure
+## Project structure
 
 ```
-├── pdf/                    # Source PDFs (not committed)
-├── pipeline/
-│   ├── index.ts            # Main orchestrator
-│   ├── config.ts           # Subject/year mapping, PDF discovery
-│   ├── gemini.ts           # Gemini Files API + extraction
-│   ├── prompt.ts           # Extraction prompt with LaTeX rules
-│   ├── extractor.ts        # Validate output, assign stable IDs
-│   ├── imageExtractor.ts   # Extract page images from PDF
-│   ├── db.ts               # SQLite schema + queries
-│   ├── exporter.ts         # SQLite → public/data/*.json
-│   └── state.ts            # Resumable pipeline state
-├── data/                   # Pipeline state + SQLite (gitignored)
-├── public/data/            # Generated JSON exports (gitignored)
-└── src/
-    ├── App.tsx
-    ├── types.ts
-    ├── hooks/
-    │   ├── useQuestionBank.ts
-    │   └── useProgress.ts
-    └── components/
-        ├── QuestionCard.tsx
-        ├── LatexRenderer.tsx
-        ├── SubjectFilterBar.tsx
-        ├── YearFilterBar.tsx
-        ├── ProgressBar.tsx
-        └── NavigationControls.tsx
+├── public/data/        # Exported question JSON files (frontend source of truth)
+├── src/
+│   ├── components/     # QuestionCard, ProgressBar, SubjectFilterBar, …
+│   ├── hooks/          # useQuestionBank, useProgress
+│   ├── types.ts        # Shared TypeScript interfaces
+│   └── index.css       # Global farm-theme CSS tokens
+├── pipeline/           # PDF → Gemini → SQLite extraction scripts
+├── data/               # SQLite database + pipeline state
+└── pdf/                # Source PDF files (git-ignored)
 ```
 
 ---
 
-## Question IDs
+## Data source
 
-Each question has a stable ID: `{subject}_{year}_q{nn}`
-
-Examples: `math1_2568_q01`, `eng_2568_q42`, `bio_2568_q15`
-
-IDs are permanent once assigned and designed for use with external apps (e.g., RPG learning games).
+Questions sourced from [mytcas.com](https://www.mytcas.com/answers/) — TCAS 2568 official
+answer sheets.
 
 ---
 
-## Notes
+## License
 
-- Questions Q26–Q30 in Physics are open-ended (not MCQ) and are intentionally skipped
-- Bio Q36–Q40 sub-questions (36.1, 36.2 etc.) are non-MCQ and skipped
-- LaTeX formulas are rendered inline with KaTeX using `$...$` syntax
-- Image extraction for diagram questions currently fails gracefully (pdfjs limitation with embedded raster images in Node.js)
+MIT

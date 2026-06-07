@@ -1,3 +1,42 @@
+:root {
+  /* Sky & land */
+  --sky: #bfe8f7;
+  --sky-2: #d9f2e0;
+  --meadow: #7cc24f;
+  --meadow-dark: #5a9a39;
+
+  /* Earth & wood */
+  --soil: #5b3a22;
+  --soil-2: #7a4f30;
+  --wood: #c8924f;
+  --wood-dark: #8a5a32;
+  --wood-light: #e3b878;
+
+  /* Surfaces & ink */
+  --parchment: #fff6e0;
+  --parchment-2: #ffeecb;
+  --ink: #3a2817;
+  --ink-soft: #6b513a;
+
+  /* Accents */
+  --wheat: #f4c14e;
+  --wheat-deep: #e0a32f;
+  --leaf: #4a8a3a;
+
+  /* States */
+  --correct: #5aa83a;
+  --correct-bg: #e7f6d8;
+  --wrong: #d2483f;
+  --wrong-bg: #fae0dd;
+
+  --font-pixel: 'Press Start 2P', system-ui, sans-serif;
+  --font-thai: 'IBM Plex Sans Thai', 'Segoe UI', system-ui, sans-serif;
+
+  /* Chunky pixel shadow helpers */
+  --shadow-hard: 4px 4px 0 rgba(58, 40, 23, 0.35);
+  --shadow-hard-sm: 3px 3px 0 rgba(58, 40, 23, 0.3);
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -5,16 +44,45 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-thai);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
+  /* Sunny sky fading down into meadow green */
+  background:
+    linear-gradient(180deg,
+      var(--sky) 0%,
+      var(--sky) 30%,
+      var(--sky-2) 48%,
+      var(--meadow) 62%,
+      var(--meadow-dark) 100%)
+      fixed;
+  min-height: 100vh;
 }
 
 button {
-  font-family: inherit;
+  font-family: var(--font-thai);
 }
 
-/* KaTeX display math centering */
+/* Crisp pixel rendering for any pixel-art imagery */
+img[src*=".png"],
+.pixelated {
+  image-rendering: pixelated;
+}
+
+/* KaTeX stays legible on parchment */
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;
+}
+.katex {
+  color: var(--ink);
+}
+
+/* Calm everything for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

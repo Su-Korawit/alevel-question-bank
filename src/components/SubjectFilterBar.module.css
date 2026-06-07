@@ -1,29 +1,51 @@
 .bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   padding: 16px 0;
+  animation: riseIn 0.5s ease both;
+  animation-delay: 0.05s;
 }
 
+/* Wooden plot tab */
 .pill {
-  padding: 8px 18px;
-  border-radius: 999px;
-  border: 2px solid #d1d5db;
-  background: #fff;
-  color: #374151;
+  padding: 9px 18px;
+  border: 3px solid var(--wood-dark);
+  border-radius: 6px;
+  background: linear-gradient(180deg, var(--wood-light) 0%, var(--wood) 100%);
+  color: var(--soil);
+  font-family: var(--font-thai);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.15s;
+  box-shadow: var(--shadow-hard-sm), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+  transition: transform 0.1s, box-shadow 0.1s, filter 0.1s;
 }
 
 .pill:hover {
-  border-color: #6366f1;
-  color: #6366f1;
+  filter: brightness(1.06);
+  transform: translateY(-2px);
 }
 
+.pill:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 rgba(58, 40, 23, 0.3);
+}
+
+/* Active = ripe, wheat-gold raised tile */
 .active {
-  background: #6366f1;
-  border-color: #6366f1;
-  color: #fff;
+  background: linear-gradient(180deg, var(--wheat) 0%, var(--wheat-deep) 100%);
+  border-color: var(--soil);
+  color: var(--soil);
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow-hard-sm), inset 0 2px 0 rgba(255, 255, 255, 0.45);
+}
+
+.active:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
