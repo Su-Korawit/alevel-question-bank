@@ -1,0 +1,100 @@
+.app {
+  min-height: 100vh;
+  background: #f8f7ff;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.header {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #4f46e5;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 2px 0 0;
+}
+
+.main {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 16px 20px 60px;
+}
+
+.loading {
+  text-align: center;
+  color: #9ca3af;
+  padding: 48px 0;
+  font-size: 15px;
+}
+
+.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 16px 20px;
+  color: #dc2626;
+  margin-top: 24px;
+}
+
+.errorHint {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+.errorHint code {
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 48px 0;
+  font-size: 15px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.footerText {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.footerLink {
+  display: inline-flex;
+  align-items: center;
+}
+
+.footerLogo {
+  height: 28px;
+  width: auto;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+
+.footerLink:hover .footerLogo {
+  opacity: 1;
+}

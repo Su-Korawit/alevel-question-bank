@@ -1,0 +1,7 @@
+node_modules/
+dist/
+data/pipeline-state.json
+data/question-bank.sqlite
+data/errors/
+public/data/
+.env

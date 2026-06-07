@@ -1,0 +1,148 @@
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.number {
+  display: inline-block;
+  background: #ede9fe;
+  color: #4f46e5;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+
+.questionText {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #111827;
+  margin-bottom: 20px;
+  white-space: pre-wrap;
+}
+
+.imageWrap {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.choice {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fafafa;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  line-height: 1.6;
+}
+
+.choice:hover:not(:disabled) {
+  border-color: #6366f1;
+  background: #f5f3ff;
+}
+
+.choice:disabled {
+  cursor: default;
+}
+
+.choiceLabel {
+  font-weight: 700;
+  color: #6366f1;
+  min-width: 20px;
+  flex-shrink: 0;
+}
+
+.correct {
+  border-color: #10b981 !important;
+  background: #ecfdf5 !important;
+}
+
+.correct .choiceLabel {
+  color: #059669;
+}
+
+.wrong {
+  border-color: #ef4444 !important;
+  background: #fef2f2 !important;
+}
+
+.wrong .choiceLabel {
+  color: #dc2626;
+}
+
+.dimmed {
+  opacity: 0.45;
+}
+
+.revealBtn {
+  display: block;
+  margin: 0 auto 0;
+  padding: 8px 24px;
+  background: none;
+  border: 2px solid #d1d5db;
+  border-radius: 8px;
+  color: #6b7280;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.revealBtn:hover {
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.answer {
+  margin-top: 16px;
+  padding: 14px 16px;
+  background: #f0fdf4;
+  border-radius: 10px;
+  border: 1.5px solid #bbf7d0;
+}
+
+.answerLabel {
+  font-weight: 700;
+  color: #059669;
+  font-size: 14px;
+  margin-right: 6px;
+}
+
+.answerValue {
+  font-weight: 800;
+  color: #059669;
+  font-size: 16px;
+}
+
+.explanation {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+}
